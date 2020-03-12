@@ -1,5 +1,13 @@
-function shortenPath(p: string, maxCharCount: integer) {
-  if (p.length <= maxCharCount)
+function shortenPath(p, maxCharCount) {
+  if (typeof p !== 'string' || typeof maxCharCount !== 'number')
+    return p;
+  
+  if (isNaN(parseInt(maxCharCount, 10)))
+    return p;
+
+  const mcc = parseInt(maxCharCount, 10);
+  
+  if (p.length <= mcc)
     return p;
 
   const parts = p
@@ -11,20 +19,17 @@ function shortenPath(p: string, maxCharCount: integer) {
 
   const repoName = parts[0];
 
-  const ellipsisCropEnd = s => `${s.slice(0, maxCharCount - 3)}...`
+  const ellipsisCropEnd = s => `${s.slice(0, mcc - 3)}...`
 
-  if (repoName.length > maxCharCount)
+  if (repoName.length > mcc)
     return ellipsisCropEnd(repoName);
 
-  let res = repoName;
-  let remainingCharCount = maxCharCount - repoName.length;
+  let res = `${res}/.../${lastPart}/`;
 
   const lastPart = parts[parts.length - 1];
 
-  if (repoName.length + lastPart.length + 5 > maxCharCount)
-    return ellipsisCropEnd(`${repoName}/.../${lastPart}`);
-
-  res = `${res}/.../${lastPart}/`;
+  if (repoName.length + lastPart.length + 5 > mcc)
+    return ellipsisCropEnd(res);
 
   let lastLeftIdx = 0;
   let lastRightIdx = parts.length - 1;
@@ -34,7 +39,7 @@ function shortenPath(p: string, maxCharCount: integer) {
       return res;
     
     let nextRes = res.replace('...', `${parts[++lastLeftIdx]}/...`);
-    if (nextRes.length > maxCharCount)
+    if (nextRes.length > mcc)
       return res;
 
     if (lastLeftIdx === lastRightIdx)
@@ -42,13 +47,12 @@ function shortenPath(p: string, maxCharCount: integer) {
     
     res = nextRes;
     nextRes = res.replace('...', `${parts[--lastRightIdx]}/...`);
-    if (nextRes.length > maxCharCount)
+    if (nextRes.length > mcc)
       return res;
     
-  } while (res.length <= maxCharCount);
+  } while (res.length <= mcc);
 
   return res;
 }
 
 module.exports = shortenPath;
-

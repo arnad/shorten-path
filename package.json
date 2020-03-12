@@ -1,6 +1,6 @@
 {
   "name": "shorten-path",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shorten file paths",
   "main": "index.js",
   "scripts": {
