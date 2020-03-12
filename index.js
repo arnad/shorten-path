@@ -28,7 +28,7 @@ function shortenPath(p, maxCharCount) {
 
   let res = `${repoName}/.../${lastPart}/`;
 
-  if (res.length + 5 > mcc)
+  if (res.length > mcc)
     return ellipsisCropEnd(res);
 
   let lastLeftIdx = 0;
@@ -56,3 +56,4 @@ function shortenPath(p, maxCharCount) {
 }
 
 module.exports = shortenPath;
+
