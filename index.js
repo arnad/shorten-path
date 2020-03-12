@@ -24,11 +24,11 @@ function shortenPath(p, maxCharCount) {
   if (repoName.length > mcc)
     return ellipsisCropEnd(repoName);
 
-  let res = `${res}/.../${lastPart}/`;
-
   const lastPart = parts[parts.length - 1];
 
-  if (repoName.length + lastPart.length + 5 > mcc)
+  let res = `${repoName}/.../${lastPart}/`;
+
+  if (res.length + 5 > mcc)
     return ellipsisCropEnd(res);
 
   let lastLeftIdx = 0;
